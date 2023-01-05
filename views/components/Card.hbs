@@ -1,0 +1,9 @@
+    <article class="card mt-4">
+        <div class="card-body">
+            <p>{{url.origin}}</p>
+            <p>{{url.shortURL}}</p>
+            <a href="/eliminate/{{url._id}}" class="btn btn-danger">Eliminate</a>
+            <a href="/edit/{{url._id}}" class="btn btn-warning">Edit</a>
+            <a data-short="{{url.shortURL}}" class="btn btn-info">copy</a>
+        </div>
+    </article>
