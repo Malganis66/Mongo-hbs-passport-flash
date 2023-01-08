@@ -1,0 +1,16 @@
+<h1 class="text-center">{{user.userName}}</h1>
+<p class="text-center">Edit your perfil</p>
+<div class="my-2 text-center">
+    {{#if image}}
+        <img src="/public/img/perfils/{{image}}" alt="">
+        {{else}}
+        <img src="/public/img/perfils/imagen.jpg" alt="">
+    {{/if}}
+</div>
+
+<form action="/perfil" enctype="multipart/form-data" method="post">
+    <div class="mb-3">
+        <input class="form-control" type="file" id="formFile" name="myFile">
+        <button class="btn btn-dark"><s>Change your perfil's image</s></button>
+    </div>
+</form>

@@ -5,11 +5,15 @@ import { create } from "express-handlebars";
 import session from "express-session";
 import flash from "connect-flash";
 import passport from "passport";
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import routeRoot from "./routes/home.js";
 import routeLogin from "./routes/auth.js";
 import User from "./models/User.js";
 
 const app = express();
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.use(
   session({
@@ -47,7 +51,7 @@ app.use((req,res,next)=>{
   next();
 })
 
-app.use(express.static("/public/js/index.js"));
+app.use('/public', express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/", routeRoot);
