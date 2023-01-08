@@ -23,7 +23,6 @@ export const ChangePerfilImg = async(req,res)=>{
     form.parse(req, async(err, fields, files)=>{
         try {
             if(err) throw new Error('image upload has failed')
-            console.log(files);
             const file = files.myFile;
             if(file.originalFilename === "") {
                 throw new Error('Introduce an image please')

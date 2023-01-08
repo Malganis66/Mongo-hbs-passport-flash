@@ -1,8 +1,11 @@
 import "dotenv/config";
 import express from "express";
-import "./database/db.js";
+import clientDB from './database/db.js';
 import { create } from "express-handlebars";
-import session from "express-session";
+import session, { Cookie } from "express-session";
+import MongoStore from 'connect-mongo';
+import mongoSanitize from 'express-mongo-sanitize';
+import cors from 'cors';
 import flash from "connect-flash";
 import passport from "passport";
 import { dirname } from 'path';
@@ -13,14 +16,26 @@ import User from "./models/User.js";
 
 const app = express();
 
+const corsOption = {
+  Credentials: true,
+  origin: process.env.foldPath || "*" ,
+  methods: ['GET', 'POST']
+}
+app.use(cors())
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.use(
   session({
-    secret: "kabin hana",
+    secret: process.env.sessionSecret,
     resave: false,
     saveUninitialized: false,
     name: "second-morse-code",
+    store: MongoStore.create({
+      clientPromise: clientDB,
+      dbName: process.env.DBName
+    }),
+    cookie: {secure: process.env.MODO === 'production', maxAge: 30*24*60*60*1000}
   })
 );
 
@@ -45,6 +60,8 @@ const hbs = create({
 app.engine(".hbs", hbs.engine);
 app.set("view engine", ".hbs");
 app.set("views", "./views");
+
+app.use(mongoSanitize());
 
 app.use((req,res,next)=>{
   res.locals.messages = req.flash('messages');

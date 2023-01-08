@@ -37,7 +37,7 @@ export const RegisterControllerUser = async (req, res) => {
       from: '"Fred Foo 👻" <foo@example.com>', // sender address
       to: user.email, // list of receivers
       subject: "Verify your email please", // Subject line
-      html: `<a href="http://localhost:3000/auth/confirm/${user.tokenConfirm}">Click here to verify</a>`, // html body
+      html: `<a href="${process.env.foldPath || 'http://localhost:3000'}/auth/confirm/${user.tokenConfirm}">Click here to verify</a>`, // html body
     })
 
     req.flash('messages', [{msg: 'Account created!, please confirm your account'}])
