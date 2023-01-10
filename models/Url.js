@@ -4,7 +4,6 @@ import { nanoid } from 'nanoid';
 const UrlSchema = new Schema({
     origin: {
         type: String,
-        unique: true,
         required: true
     },
     shortURL: {
